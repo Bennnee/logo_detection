@@ -1,8 +1,8 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import numpy as np
 import os
 import sys
-from scipy import ndimage
+from matplotlib.pyplot import imread
 import re
 import common
 
@@ -14,7 +14,7 @@ CROPPED_AUG_IMAGE_DIR = os.path.join(
     TRAIN_DIR, 'flickr_logos_27_dataset_cropped_augmented_images')
 PIXEL_DEPTH = 255.0
 
-FLAGS = tf.flags.FLAGS
+FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_integer("image_width", 64, "A width of an input image")
 tf.app.flags.DEFINE_integer("image_height", 32, "A height of an input image")
 tf.app.flags.DEFINE_integer("num_channels", 3,
@@ -83,7 +83,7 @@ def main():
     print("Test image:", test_image_fn)
 
     # Open and resize a test image
-    test_image_org = (ndimage.imread(test_image_fn).astype(np.float32) -
+    test_image_org = (imread(test_image_fn).astype(np.float32) -
                       PIXEL_DEPTH / 2) / PIXEL_DEPTH
     test_image_org.resize((CNN_IN_HEIGHT, CNN_IN_WIDTH, CNN_IN_CH))
     test_image = test_image_org.reshape(
