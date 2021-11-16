@@ -26,6 +26,7 @@
 import numpy as np
 import os
 from scipy import ndimage
+from matplotlib.pyplot import imread
 from six.moves import cPickle as pickle
 import re
 import common
@@ -54,7 +55,7 @@ def load_logo(data_dir):
     for image in image_files:
         image_file = os.path.join(data_dir, image)
         try:
-            image_data = (ndimage.imread(image_file).astype(float) -
+            image_data = (imread(image_file).astype(float) -
                           PIXEL_DEPTH / 2) / PIXEL_DEPTH
             if image_data.shape != (CNN_IN_HEIGHT, CNN_IN_WIDTH, CNN_IN_CH):
                 raise Exception('Unexpected image shape: %s' %
